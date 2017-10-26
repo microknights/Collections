@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroKnights.Collections", "src\Enumeration\MicroKnights.Collections.csproj", "{FA950103-5808-403A-8FB2-D4DF7F6F14FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroKnights.Collections.Test", "Test\MicroKnights.Collections.Test.csproj", "{5155DA94-FAA2-4E81-87B5-D2F399AF4FC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33181AE5-340A-4CC1-A8A9-7D2996D874C2}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA950103-5808-403A-8FB2-D4DF7F6F14FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA950103-5808-403A-8FB2-D4DF7F6F14FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA950103-5808-403A-8FB2-D4DF7F6F14FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA950103-5808-403A-8FB2-D4DF7F6F14FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5155DA94-FAA2-4E81-87B5-D2F399AF4FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5155DA94-FAA2-4E81-87B5-D2F399AF4FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5155DA94-FAA2-4E81-87B5-D2F399AF4FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5155DA94-FAA2-4E81-87B5-D2F399AF4FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACA16124-73DF-482F-8C60-0EF5F7E56303}
+	EndGlobalSection
+EndGlobal

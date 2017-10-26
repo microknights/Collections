@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>MicroKnights.Collections</RootNamespace>
+    <AssemblyName>MicroKnights.Collections</AssemblyName>
+    
+    <PackageId>MicroKnights.Collections</PackageId>
+    <PackageVersion>1.0.0-alpha</PackageVersion>
+    <Authors>Frank Løvendahl Nielsen</Authors>
+    <Description>True enumeration with linq</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) MicroKnights. All rights reserved.</Copyright>
+    <PackageTags>Collection Enumeration</PackageTags>
+  </PropertyGroup>
+
+</Project>
