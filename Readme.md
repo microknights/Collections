@@ -7,7 +7,7 @@ But again, all credits to Headpring for introducing the way...
 
 ## Nuget package
 ```
-Install-Package MicroKnights.Collections -Version 1.0.0 (-alpha)
+Install-Package MicroKnights.Collections -Version 1.0.0
 ```
 
 
