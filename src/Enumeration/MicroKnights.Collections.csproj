@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <RootNamespace>MicroKnights.Collections</RootNamespace>
     <AssemblyName>MicroKnights.Collections</AssemblyName>
-    
+
     <PackageId>MicroKnights.Collections</PackageId>
     <Authors>Frank Løvendahl Nielsen</Authors>
     <Description>True enumeration with linq</Description>
@@ -12,11 +17,40 @@
     <PackageReleaseNotes>First release</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) MicroKnights. All rights reserved.</Copyright>
     <PackageTags>Collection Enumeration</PackageTags>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Company>MicroKnights</Company>
     <PackageProjectUrl>https://github.com/microknights/Collections</PackageProjectUrl>
     <RepositoryUrl>https://github.com/microknights/Collections</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>MicroKnights.Collections</RootNamespace>
+    <AssemblyName>MicroKnights.Collections</AssemblyName>
+
+    <PackageId>MicroKnights.Collections</PackageId>
+    <Authors>Frank Løvendahl Nielsen</Authors>
+    <Description>True enumeration with linq</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Moved to .Net Standard 1.3 and 2.0
+ - .Net Standard 1.3 without Serialization</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) MicroKnights. All rights reserved.</Copyright>
+    <PackageTags>Collection Enumeration</PackageTags>
+    <Version>1.0.1</Version>
+    <Company>MicroKnights</Company>
+    <PackageProjectUrl>https://github.com/microknights/Collections</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/microknights/Collections</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="1.6.1" />
+  </ItemGroup>
 
 </Project>

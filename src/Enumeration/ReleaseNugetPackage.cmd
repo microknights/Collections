@@ -18,7 +18,8 @@ set MSBuildSDKsPath=c:\Program Files\dotnet\sdk\2.0.2\Sdks\
 
 rmdir /q/s R:\NuGet_Release
 mkdir R:\NuGet_Release
-msbuild /t:pack /p:Configuration=Release /p:OutputPath=r:\NuGet_Release
-nuget setApiKey %Microknights_Nuget_ApiKey%
-nuget push R:\NuGet_Release\*.nupkg -Source https://www.nuget.org/api/v2/package
 
+dotnet build -f netstandard1.3 -c Release -o r:\NuGet_Release\lib\netstandard1.3
+dotnet build -f netstandard2.0 -c Release -o r:\NuGet_Release\lib\netstandard2.0
+
+nuget pack MicroKnights.Collections.nuspec -OutputDirectory r:\

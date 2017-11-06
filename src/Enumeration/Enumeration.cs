@@ -2,11 +2,15 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+#if NETSTANDARD2_0
 using System.Runtime.Serialization;
+#endif
 
 namespace MicroKnights.Collections
 {
+#if NETSTANDARD2_0
     [Serializable]
+#endif
     [DebuggerDisplay("{DisplayName}[{Value}]")]
     public abstract class Enumeration<TEnumeration> : Enumeration<TEnumeration, int>
         where TEnumeration : Enumeration<TEnumeration>
@@ -27,7 +31,9 @@ namespace MicroKnights.Collections
         }
     }
 
+#if NETSTANDARD2_0
     [Serializable]
+#endif
     [DebuggerDisplay("{DisplayName}[{Value}]")]
     public abstract class Enumeration<TEnumeration, TValue> : IComparable<TEnumeration>, IEquatable<TEnumeration>
         where TEnumeration : Enumeration<TEnumeration, TValue>
@@ -35,10 +41,14 @@ namespace MicroKnights.Collections
     {
         private static readonly Lazy<TEnumeration[]> Enumerations = new Lazy<TEnumeration[]>(GetEnumerations);
 
+#if NETSTANDARD2_0
         [DataMember(Order = 1)]
+#endif
         readonly string _displayName;
 
+#if NETSTANDARD2_0
         [DataMember(Order = 0)]
+#endif
         readonly TValue _value;
 
         protected Enumeration(TValue value, string displayName)
@@ -50,8 +60,10 @@ namespace MicroKnights.Collections
             _displayName = displayName;
         }
 
+        // ReSharper disable ConvertToAutoProperty
         public TValue Value => _value;
         public string DisplayName => _displayName;
+        // ReSharper restore ConvertToAutoProperty
 
         public int CompareTo(TEnumeration other)
         {
@@ -72,11 +84,43 @@ namespace MicroKnights.Collections
         {
             Type enumerationType = typeof(TEnumeration);
             return enumerationType
-                .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                .Where(info => enumerationType.IsAssignableFrom(info.FieldType))
-                .Select(info => info.GetValue(null))
-                .Cast<TEnumeration>()
-                .ToArray();
+                .GetRuntimeFields()
+                .Where(rf => rf.IsPublic && rf.IsStatic && rf.FieldType == enumerationType && rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType.GetTypeInfo()))
+                .Select(rf => rf.GetValue(null))
+                .Cast<TEnumeration>().ToArray();
+
+            /*
+            #if NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD2_0
+            /*
+                        var fields = enumerationType.GetRuntimeFields();
+                        var declaredPulibcStatic = fields.Where(rf => rf.IsPublic && rf.IsStatic);
+                        var declaredFields = declaredPulibcStatic.Where(rf => rf.FieldType == enumerationType);
+                        var declaredSubClass = declaredFields.Where(rf => rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType.GetTypeInfo()));
+                        var variables = declaredSubClass.Select(rf => rf.GetValue(null));
+                        return variables.Cast<TEnumeration>().ToArray();
+            #1#
+            #endif
+            #if NETSTANDARD1_6 || NETSTANDARD2_0
+            /*
+                        var fields = enumerationType.GetRuntimeFields();
+                        var declaredPulibcStatic = fields.Where(rf => rf.IsPublic && rf.IsStatic);
+                        var declaredFields = declaredPulibcStatic.Where(rf => rf.MemberType == MemberTypes.Field );
+                        var declaredSubClass = declaredFields.Where(rf => rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType));
+                        var variables = declaredSubClass.Select(rf => rf.GetValue(null));
+                        return variables.Cast<TEnumeration>().ToArray();
+            #1#
+            #endif
+            #if NETSTANDARD2_0
+            /*
+                        return enumerationType
+                            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                            .Where(info => enumerationType.IsAssignableFrom(info.FieldType))
+                            .Select(info => info.GetValue(null))
+                            .Cast<TEnumeration>()
+                            .ToArray();
+            #1#
+            #endif
+            */
         }
 
         public override bool Equals(object obj)
@@ -161,3 +205,4 @@ namespace MicroKnights.Collections
         }
     }
 }
+
