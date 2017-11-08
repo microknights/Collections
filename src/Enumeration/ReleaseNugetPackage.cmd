@@ -7,7 +7,7 @@ goto:eof
 
 :CheckArgs
 IF NOT [%1] == [] GOTO ArgumentsOk
-echo [101;93m Please remember to correct package version in *.csproj and enter something in argument [0m
+echo [101;93m PLEASE: remember to correct package version in *.csproj and *.nuspec. Enter something in argument [0m
 goto:eof
 
 :ArgumentsOk
@@ -21,5 +21,6 @@ mkdir R:\NuGet_Release
 
 dotnet build -f netstandard1.3 -c Release -o r:\NuGet_Release\lib\netstandard1.3
 dotnet build -f netstandard2.0 -c Release -o r:\NuGet_Release\lib\netstandard2.0
+dotnet build -f net46 -c Release -o r:\NuGet_Release\lib\net46
 
 nuget pack MicroKnights.Collections.nuspec -OutputDirectory r:\

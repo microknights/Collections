@@ -2,13 +2,13 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NET46
 using System.Runtime.Serialization;
 #endif
 
 namespace MicroKnights.Collections
 {
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NET46
     [Serializable]
 #endif
     [DebuggerDisplay("{DisplayName}[{Value}]")]
@@ -31,7 +31,7 @@ namespace MicroKnights.Collections
         }
     }
 
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NET46
     [Serializable]
 #endif
     [DebuggerDisplay("{DisplayName}[{Value}]")]
@@ -41,12 +41,12 @@ namespace MicroKnights.Collections
     {
         private static readonly Lazy<TEnumeration[]> Enumerations = new Lazy<TEnumeration[]>(GetEnumerations);
 
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NET46
         [DataMember(Order = 1)]
 #endif
         readonly string _displayName;
 
-#if NETSTANDARD2_0
+#if NETSTANDARD2_0 || NET46
         [DataMember(Order = 0)]
 #endif
         readonly TValue _value;
@@ -82,45 +82,12 @@ namespace MicroKnights.Collections
 
         private static TEnumeration[] GetEnumerations()
         {
-            Type enumerationType = typeof(TEnumeration);
+            var enumerationType = typeof(TEnumeration);
             return enumerationType
                 .GetRuntimeFields()
                 .Where(rf => rf.IsPublic && rf.IsStatic && rf.FieldType == enumerationType && rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType.GetTypeInfo()))
                 .Select(rf => rf.GetValue(null))
                 .Cast<TEnumeration>().ToArray();
-
-            /*
-            #if NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD2_0
-            /*
-                        var fields = enumerationType.GetRuntimeFields();
-                        var declaredPulibcStatic = fields.Where(rf => rf.IsPublic && rf.IsStatic);
-                        var declaredFields = declaredPulibcStatic.Where(rf => rf.FieldType == enumerationType);
-                        var declaredSubClass = declaredFields.Where(rf => rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType.GetTypeInfo()));
-                        var variables = declaredSubClass.Select(rf => rf.GetValue(null));
-                        return variables.Cast<TEnumeration>().ToArray();
-            #1#
-            #endif
-            #if NETSTANDARD1_6 || NETSTANDARD2_0
-            /*
-                        var fields = enumerationType.GetRuntimeFields();
-                        var declaredPulibcStatic = fields.Where(rf => rf.IsPublic && rf.IsStatic);
-                        var declaredFields = declaredPulibcStatic.Where(rf => rf.MemberType == MemberTypes.Field );
-                        var declaredSubClass = declaredFields.Where(rf => rf.FieldType.GetTypeInfo().IsAssignableFrom(enumerationType));
-                        var variables = declaredSubClass.Select(rf => rf.GetValue(null));
-                        return variables.Cast<TEnumeration>().ToArray();
-            #1#
-            #endif
-            #if NETSTANDARD2_0
-            /*
-                        return enumerationType
-                            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-                            .Where(info => enumerationType.IsAssignableFrom(info.FieldType))
-                            .Select(info => info.GetValue(null))
-                            .Cast<TEnumeration>()
-                            .ToArray();
-            #1#
-            #endif
-            */
         }
 
         public override bool Equals(object obj)
@@ -168,7 +135,7 @@ namespace MicroKnights.Collections
             return ParseOrDefault(item => item.DisplayName == displayName, defaultEnumeration);
         }
 
-        static bool TryParse(Func<TEnumeration, bool> predicate, out TEnumeration result)
+        private static bool TryParse(Func<TEnumeration, bool> predicate, out TEnumeration result)
         {
             result = GetAll().SingleOrDefault(predicate);
             return result != null;
@@ -176,12 +143,7 @@ namespace MicroKnights.Collections
 
         private static TEnumeration Parse(Func<TEnumeration, bool> predicate)
         {
-            if( TryParse(predicate, out var result) )
-            {
-                return result;
-            }
-
-            return default(TEnumeration);
+            return TryParse(predicate, out var result) ? result : default(TEnumeration);
         }
 
         private static TEnumeration ParseOrDefault( Func<TEnumeration, bool> predicate, TEnumeration defaultEnumeration)
