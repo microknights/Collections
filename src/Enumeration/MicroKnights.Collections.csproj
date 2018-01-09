@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net452;net46</TargetFrameworks>
   </PropertyGroup>
 
 
@@ -9,25 +9,32 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <RootNamespace>MicroKnights.Collections</RootNamespace>
     <AssemblyName>MicroKnights.Collections</AssemblyName>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>MicroKnights.Collections</RootNamespace>
     <AssemblyName>MicroKnights.Collections</AssemblyName>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>MicroKnights.Collections</RootNamespace>
+    <AssemblyName>MicroKnights.Collections</AssemblyName>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
     <RootNamespace>MicroKnights.Collections</RootNamespace>
     <AssemblyName>MicroKnights.Collections</AssemblyName>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0"  Condition="'$(TargetFramework)' != 'net452'" />
   </ItemGroup>
 
   <ItemGroup>
