@@ -7,13 +7,37 @@ But again, all credits to Headpring for introducing the way...
 
 ## Nuget package
 ```
-Install-Package MicroKnights.Collections -Version 1.0.0
+Install-Package MicroKnights.Collections
 ```
 
 
-### Usage
+### Usage simple
+Declare your enumerations individual by doing this:
 
-Declare your enumeration by doing this:
+```
+    public  class ColorType : Enumeration<ColorType>
+    {
+        public ColorType(int value, string displayName, Color color) 
+            : base(value, displayName)
+        {
+            Color = color;
+        }
+        
+        public Color Color { get; }
+
+        public static readonly StatusType Unknown = new ColorType(-1,"unknown", Color.Transpart);
+        public static readonly StatusType Red = new ColorType(10,"Red", Color.Red);
+        public static readonly StatusType Green = new ColorType(20,"Green", Color.Green);
+        public static readonly StatusType Blue = new ColorType(30,"Blue", Color.Blue);
+
+        public bool IsUnknown => Value = Unknown.Value;
+        public bool IsKnown => IsUnknown == false;
+    }
+```
+
+### Usage more complex
+
+Declare your enumerations individual by doing this:
 ```
     public abstract class StatusType : Enumeration<StatusType>
     {
