@@ -168,14 +168,7 @@ For use with Entity Framework, this can easily be done:
 ```
 public class MyEntity
 {
-    private int _statusTypeValue;
-    
-    public int StatusValue => _statusTypeValue;
-    public StatusType Status
-    {
-        get { return StatusType.FromValue(_statusTypeVal); }
-        set { _statusTypeValue = value.value; }
-    }
+    public StatusType Status { get; set; }
 }
 ```
 
@@ -183,10 +176,6 @@ and in your mapping:
 
 ```
     modelBuilder.Entity<MyEntity>()
-            .Property(b => b.StatusValue)
-            .HasField("_statusTypeValue");
-    modelBuilder.Entity<MyEntity>()
-            .Property(b => b.Status)
-            .Ignore();
+            .Property(b => b.Status ).HasConversion(e => e.Value, i => StatusType.FromValueOrDefault(i, StatusType.Unknown));
 ```
-(Possible to avoid StatusValue, or another way around - anyone?)
+
